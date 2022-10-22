@@ -1,20 +1,20 @@
-const processPerHundred = (digitGroup) => {
+const processPerHundred = ([hundredsDigit, tensDigit, onesDigit]) => {
     const onesMap = new Map([[1, 'one'], [2, 'two'], [3, 'three'], [4, 'four'], [5, 'five'], [6, 'six'], [7, 'seven'], [8, 'eight'], [9, 'nine']])
     const tensWithOnesMap = new Map([[10, 'ten'], [11, 'eleven'], [12, 'twelve'], [13, 'thirteen'], [14, 'fourteen'], [15, 'fifteen'], [16, 'sixteen'], [17, 'seventeen'], [18, 'eighteen'], [19, 'nineteen']])
     const tensMap = new Map([[2, 'twenty'], [3, 'thirty'], [4, 'fourty'], [5, 'fifty'], [6, 'sixty'], [7, 'seventy'], [8, 'eighty'], [9, 'ninety']])
 
     let numInString = ''
 
-    if (Number(digitGroup[0]) !== 0) {
-        numInString += `${onesMap.get(Number(digitGroup[0]))} hundred `
+    if (Number(hundredsDigit) !== 0) {
+        numInString += `${onesMap.get(Number(hundredsDigit))} hundred `
     }
 
-    if (tensMap.has(Number(digitGroup[1]))) {
-        numInString += `${tensMap.get(Number(digitGroup[1]))}${(onesMap.has(Number(digitGroup[2])) ? ` ${onesMap.get(Number(digitGroup[2]))} ` : '')}`
-    } else if (Number(digitGroup[1]) === 0 && Number(digitGroup[2]) !== 0) {
-        numInString += `${(onesMap.get(Number(digitGroup[2])) ? `${onesMap.get(Number(digitGroup[2]))}` : '')} `
+    if (tensMap.has(Number(tensDigit))) {
+        numInString += `${tensMap.get(Number(tensDigit))}${(onesMap.has(Number(onesDigit)) ? ` ${onesMap.get(Number(onesDigit))} ` : ' ')}`
+    } else if (Number(tensDigit) === 0 && Number(onesDigit) !== 0) {
+        numInString += `${(onesMap.has(Number(onesDigit)) ? `${onesMap.get(Number(onesDigit))} ` : ' ')}`
     } else {
-        numInString += `${(tensWithOnesMap.has(Number(digitGroup.substr(-2))) ? `${tensWithOnesMap.get(Number(digitGroup.substr(-2)))} ` : '')}`
+        numInString += `${(tensWithOnesMap.has(Number(tensDigit.concat(onesDigit))) ? `${tensWithOnesMap.get(Number(tensDigit.concat(onesDigit)))} ` : '')}`
     }
 
     return numInString
